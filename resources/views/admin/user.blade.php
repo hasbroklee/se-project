@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    @include('backend.css')
+</head>
+
+<body class="d-flex flex-column" style="background: #404258;width: 100%;height: 100%;">
+    @include('frontend.header')
+
+    <div class="card" style="margin-top: 20px;margin-right: 27px;margin-left: 27px;border-radius: 10px;border-color: #474E68;">
+        @include('frontend.tag_admin')       
+        <div class="card-body" style="background: #474E68;">
+            <div id="nav-tabContent" class="tab-content">
+
+                <!-- danh sách sinh viên -->
+                <div id="item-1-4" class="tab-pane fade show active" role="tabpanel" aria-labelledby="item-1-4-tab">
+                    <div>
+                        <table class="table table-striped table-bordered" id="example" cellspacing="0" width="100%">
+                            <thead>
+                                <tr style="color: var(--bs-card-bg);background: #50577A;">
+                                    <th class="text-center" style="width: 60px;">ID</th>
+                                    <th class="text-center" style="width: 200px;">Ảnh</th>
+                                    <th class="text-center" style="width: 200px;max-width: 200px;">Mã sinh viên</th>
+                                    <th class="text-center" style="width: 200px;max-width: 200px;">Họ và tên</th>
+                                    <th class="text-center" style="width: 200px;max-width: 200px;">Mật khẩu</th>
+                                    <th class="text-center" style="width: 200px;max-width: 200px;">Nút</th>
+                                </tr>
+                            </thead>
+                            <tbody style="color: var(--bs-card-bg);background: #6B728E;">
+
+                            @foreach($user as $row)
+                                <tr style="font-family: Inter, sans-serif;color: #ffffff;">
+                                    <td class="text-center" style="color: var(--bs-card-bg);width: 20px;max-width: 20px;">{{ $row->id }}</td>
+                                    <td class="text-center" style="color: var(--bs-card-bg);max-width: 400px;width: 200px;">
+                                        <picture><img style="width: 100px;height: 80px;" src="{{ $row->img_avatar }}"></picture>
+                                    </td>
+                                    <td class="text-start" style="color: var(--bs-card-bg);width: 200px;max-width: 200px;">{{ $row->id_msv }}</td>
+                                    <td class="text-start" style="color: var(--bs-card-bg);width: 200px;max-width: 200px;">{{ $row->name_user }}</td>
+                                    <td class="text-start" style="color: var(--bs-card-bg);width: 200px;max-width: 200px;">{{ $row->password_user }}</td>
+                                    <td class="text-start" style="color: var(--bs-card-bg);width: 200px;max-width: 200px;">
+                                        <form method="post" action="/admin/user/delete/{{ $row->id }}" onsubmit="return ConfirmDelete( this )">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button class="btn btn-danger" type="submit">Xóa</button>
+                                        </form></td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>  
+
+    @include('frontend.footer')
+    @include('backend.js')
+
+</body>
+
+</html>
